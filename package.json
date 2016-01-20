@@ -1,0 +1,14 @@
+{
+  "name": "advraiden",
+  "version": "1.0.0",
+  "description": "*Nodejs >= 5.10*",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "http-server": "^0.8.5"
+  }
+}
