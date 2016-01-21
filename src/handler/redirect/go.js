@@ -2,7 +2,7 @@
 
 let linker = require('./linker.js');
 
-module.exports = (req, res) => {
+module.exports = (state, req, res) => {
   let id = req.url.slice(4, 10);
 
   if (id.length > 0) {

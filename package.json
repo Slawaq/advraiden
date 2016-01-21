@@ -4,11 +4,16 @@
   "description": "*Nodejs >= 5.10*",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build:client": "node src/client/build",
+    "main": "npm run build:client && node --harmony ."
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "http-server": "^0.8.5"
+    "file-loader": "^0.8.5",
+    "finalhandler": "^0.4.1",
+    "http-server": "^0.8.5",
+    "serve-static": "^1.10.2",
+    "webpack": "^1.12.11"
   }
 }

@@ -1,15 +1,24 @@
 'use strict';
 
-let http = require('http');
-let handlers = require('./handlers');
+const ADMIN_PORT = 8080;
+const REDIRECT_PORT = 3000;
 
-const PORT = 3000;
+let runServers = require('./src/tool/servers-runner');
+let loadFrom = require('./src/tool/json-loader');
+let State = require('./src/state');
 
-let server = http.createServer(
-  (request, response) => {
-    handlers(request, response);
-    response.end();
+let state = new State(loadFrom('../../state/'));
+
+let servers = [
+  {
+    port: ADMIN_PORT,
+    handler: '../handler/admin/',
+    state
+  }, {
+    port: REDIRECT_PORT,
+    handler: '../handler/redirect/',
+    state
   }
-);
+];
 
-server.listen(PORT, () => { });
+runServers(servers);
