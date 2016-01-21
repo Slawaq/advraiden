@@ -1,12 +1,15 @@
 'use strict';
 
 let http = require('http');
+let handlers = require('./handlers');
 
 const PORT = 3000;
 
 let server = http.createServer(
-  (request, response) => response.end('It Works!! Path Hit: ' + request.url));
+  (request, response) => {
+    handlers(request, response);
+    response.end();
+  }
+);
 
-server.listen(PORT, () => {
-  console.log('Server listening on: http://localhost:', PORT);
-});
+server.listen(PORT, () => { });
