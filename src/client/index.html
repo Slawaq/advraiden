@@ -5,6 +5,16 @@
   <script type="text/javascript" src="app.js"></script>
 </head>
 <body>
-Created companies:
-</body>
+  <h3 align="center">Companies</h3>
+  <table>
+    <tr>
+      <th>title</th>
+    </tr>
+    <!-- ko foreach: companies -->
+    <tr>
+      <td data-bind="text: title"></td>
+    </tr>
+    <!-- /ko -->
+  <table>
+</body>   
 </html>
