@@ -1,12 +1,12 @@
+import 'expose?$!expose?jQuery!jquery';
+import 'bootstrap-webpack!./bootstrap.config.js';
 import ko from 'knockout';
 
-import Camping from './app/camping.js';
+window.ko = ko;
 
-let viewModel = {
-  companies: [
-    new Camping({ title: 'Test' }),
-    new Camping({ title: 'Heg' })
-  ]
-};
+import registerComponents from './app/components';
+import Api from './app/api';
 
-document.addEventListener('DOMContentLoaded', () => ko.applyBindings(viewModel));
+registerComponents(ko)(new Api());
+
+document.addEventListener('DOMContentLoaded', () => ko.applyBindings());

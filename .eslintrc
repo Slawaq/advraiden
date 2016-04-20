@@ -20,8 +20,7 @@
     "prefer-const": 0,
     "comma-dangle": 0,
     "one-var": 0,
+    "react/*": 0
   },
-  "parser": "babel-eslint",
-  "plugins": [
-  ]
+  "parser": "babel-eslint"
 }

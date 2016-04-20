@@ -1,0 +1,11 @@
+<!-- ko ifnot: opened -->
+<span class="glyphicon glyphicon-plus-sign" style="cursor: pointer" data-bind="click: open"></span>
+<!-- /ko -->
+<!-- ko if: opened -->
+<form data-bind="submit: save">
+<div class="form-group">
+    <label class="sr-only" for="inputCampingName">Name</label>
+    <input data-bind="value: name" type="text" class="form-control" id="inputCampingName" placeholder="Name">
+  </div>
+</form>
+<!-- /ko -->

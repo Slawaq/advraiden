@@ -14,7 +14,7 @@ let compiler = webpack({
   },
   resolve: {
     extensions: [ '', '.jsx', '.js' ],
-    modulesDirectories: [ 'node_modules', 'lib' ]
+    modulesDirectories: [ 'node_modules', 'lib', 'components' ]
   },
   entry: [
     path.join(__dirname, 'index.html'),
@@ -23,19 +23,26 @@ let compiler = webpack({
   module: {
     loaders: [{
       test: /\.html$/,
-      loader: 'file?name=[name].[ext]',
+      loader: 'file?name=[path][name].[ext]',
     }, {
       test: /\.js$/,
       exclude: /node_modules/,
       loader: 'babel',
       query: {
-        plugins: ['transform-es2015-modules-commonjs'],
+        plugins: ['transform-runtime', 'transform-es2015-modules-commonjs'],
         presets: ['es2015', 'stage-0'],
       }
     }, {
-      test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-      loader: 'url-loader?limit=10000&mimetype=application/font-woff&name=fonts/[name].[ext]'
-    }]
+      test: /\.html/,
+      exclude: /index\.html/,
+      loader: 'html'
+    },
+    { test: /\.less$/, loader: 'style!css!postcss-loader!less' },
+    { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: 'file' },
+    { test: /\.(woff|woff2)$/, loader: 'url?prefix=font/&limit=5000' },
+    { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/octet-stream' },
+    { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=image/svg+xml' }
+    ]
   },
   node: {
     fs: 'empty',

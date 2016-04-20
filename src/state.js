@@ -3,7 +3,7 @@
 class ApplicationState {
 
   constructor(loader) {
-    this.lodaer = loader;
+    this.loader = loader;
     this.load();
   }
 
@@ -12,8 +12,8 @@ class ApplicationState {
   }
 
   load() {
-    this.campings = this.lodaer('campings');
-    this.redirects = this.campings
+    this.campaignings = this.loader('campaignings');
+    this.redirects = this.campaignings
       .map(c => c.links)
       .reduce((r, links) => r.concat(links), [])
       .reduce((r, link) => {

@@ -1,0 +1,32 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <span data-bind="click: toggleOpen" class="glyphicon glyphicon-menu-hamburger" style="cursor: pointer" title="show links"></span>
+    <span class="panel-title">
+      <span data-bind="click: toggleOpen, text: title" style="cursor: pointer"></span>
+      <span class="glyphicon glyphicon-remove camping-remove" title="remove camping"></span>
+      <span class="link-count" title="link count" data-bind="text: links().length, css: { 'link-zero-count': isZeroLinks }"></span>
+    </span>
+  </div>
+  <!-- ko if: opened -->
+  <div class="panel-body">
+    HEY!
+  </div>
+  <table class="table">
+    <thead>
+      <th width="70%">link to</th>
+      <th width="20%" class="text-right">total redirects</th>
+      <th width="10%" class="text-right">actions</th>
+    </thead>
+    <tbody data-bind="foreach: links">
+    <tr>
+      <td data-bind="text: $data.to"></td>
+      <td class="text-right" data-bind="text: $data.stat"></td>
+      <td class="text-right">
+        <span class="glyphicon glyphicon-remove camping-remove" title="remove camping"></span>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <!-- /ko -->
+</div>
+
