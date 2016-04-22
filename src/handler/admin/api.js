@@ -4,15 +4,16 @@ const Router = require('router');
 const bodyParser = require('body-parser')
 const finisher = require('../../tool/finisher');
 const validUrl = require('valid-url');
+const publicRedirect = require('../../../package.json').config.publicRedirect;
 
 let getAll = state => (req, res) => {
   let { campaignings } = state;
-  res.end(JSON.stringify({ campaignings }));
+  res.end(JSON.stringify({ campaignings, publicRedirect }));
 };
 
 let addCampaigning = state => (req, res, next) => {
   let { title } = req.body;
-  let id = state.generateNextId(state.campaignings);
+  let id = state.generateNextId(state.campaignings) + 214;
 
   let campaigning = { title, id, links: [] };
 
@@ -42,7 +43,7 @@ let addLink = state => (req, res, next) => {
   }
 
   let campaigning = state.campaignings.find(x => x.id === campaigningId);
-  let id = state.generateNextId(campaigning.links);
+  let id = state.generateNextId(campaigning.links) + 100021;
   let link = { id, to };
 
   campaigning.links.push(link);

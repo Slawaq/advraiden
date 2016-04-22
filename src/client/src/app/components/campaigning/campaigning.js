@@ -7,7 +7,7 @@ export default class Campaigning {
   constructor(props) {
     this.id = props.id;
     this.title = ko.observable(props.title);
-    this.links = ko.observableArray(props.links);
+    this.links = ko.observableArray(props.links.map(x => ({ ...x, source: props.linkGenerator(this.id)(x.id) })));
     this.isZeroLinks = ko.computed(() => this.links().length === 0);
 
     this.props = props;
@@ -27,24 +27,24 @@ export default class Campaigning {
     return false;
   }
 
-  removeLink(link) {
+  async removeLink(link) {
     let accepted = confirm(`Remove link - ${link.to}?`);
 
-    if (accepted)
-      this.props
-          .removeLink(this.id, link.id)
-          .then(_ => this.links(this.links().filter(x => x.id !== link.id)));
+    if (accepted) {
+      await this.props.removeLink(this.id, link.id)
+      this.links(this.links().filter(x => x.id !== link.id));
+    }
   }
 
   async addLink(to) {
     let link = await this.props.addLink(this.id, to);
-    this.links.push(link);
+    this.links.push({ ...link, source: this.props.linkGenerator(this.id)(link.id) });
   }
 
   getLinkFormProps() {
     return {
       add: ::this.addLink,
-      placeholder: 'http://...',
+      placeholder: 'www...',
       title: 'ADD LINK'
     }
   }

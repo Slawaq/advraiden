@@ -10,13 +10,15 @@
   <!-- ko if: opened -->
   <table class="table">
     <thead>
-      <th width="70%">link to</th>
+      <th width="40%">destination</th>
+      <th width="30%">source</th>
       <th width="20%" class="text-right">total redirects</th>
       <th width="10%" class="text-right">actions</th>
     </thead>
     <tbody data-bind="foreach: links">
     <tr>
-      <td><a data-bind="text: $data.to, attr: { href: $data.to }" target="_blank"></a></td>
+      <td><a data-bind="text: $data.to.substring(7), attr: { href: $data.to }" target="_blank"></a></td>
+      <td><a data-bind="text: $data.source.substring(7), attr: { href: $data.source }" target="_blank"></a></td>
       <td class="text-right" data-bind="text: 0"></td>
       <td class="text-right">
         <span class="glyphicon glyphicon-remove camping-remove" title="remove camping" data-bind="click: $parent.removeLink.bind($parent)"></span>

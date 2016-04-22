@@ -14,6 +14,7 @@ class App {
   async load(api) {
     let data = await api.all();
     this.campaignings(data.campaignings);
+    this.linkGenerator = campaigningId => id => `${data.publicRedirect}/${campaigningId}/${id}`;
     this.loaded(true);
   }
   
@@ -32,6 +33,7 @@ class App {
       remove: ::this.removeCampaigning,
       removeLink: ::this.api.removeLink,
       addLink: ::this.api.addLink,
+      linkGenerator: this.linkGenerator,
       ...data
     }
   }
