@@ -2,11 +2,12 @@ import ko from 'knockout';
 
 class App {
 
-  campaignings = ko.observable([]);
+  campaignings = ko.observableArray([]);
   loaded = ko.observable(false);
 
   constructor(api) {
-    window.api = api;
+    window.api = api; //todo: remove
+    this.api = api;
     this.load(api);
   }
 
@@ -15,15 +16,26 @@ class App {
     this.campaignings(data.campaignings);
     this.loaded(true);
   }
-
-  add(name) {
-    this.campaignings([{
-      title: name,
-      id: (this.campaignings[0] || { id: 0 }).id + 1,
-      links: []
-    }].concat(this.campaignings))
-  }
   
+  async removeCampaigning(id) {
+    await this.api.removeCampaigning(id);
+    this.campaignings(this.campaignings().filter(x => x.id !== id));
+  }
+
+  async add(title) {
+    let campaigning =  await this.api.addCampaigning(title);
+    this.campaignings.push(campaigning);
+  }
+
+  generateCampaigningProps(data) {
+    return {
+      remove: ::this.removeCampaigning,
+      removeLink: ::this.api.removeLink,
+      addLink: ::this.api.addLink,
+      ...data
+    }
+  }
+
 }
 
 export default App;

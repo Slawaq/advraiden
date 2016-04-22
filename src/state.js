@@ -2,8 +2,9 @@
 
 class ApplicationState {
 
-  constructor(loader) {
+  constructor(loader, saver) {
     this.loader = loader;
+    this.saver = saver;
     this.load();
   }
 
@@ -20,6 +21,20 @@ class ApplicationState {
         r[link.uuid] = link;
         return r;
       }, {});
+  }
+
+  update() {
+    this.saver('campaignings')(this.campaignings);
+  }  
+
+  generateNextId(entities) {
+    if (entities.length === 0) 
+      return 0;
+
+    return entities
+      .slice(0) // copy, cuz sort creates side effects((
+      .sort((a, b) => b.id - a.id)[0]
+      .id + 1;
   }
 
 }

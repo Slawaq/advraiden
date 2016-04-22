@@ -1,30 +1,76 @@
 'use strict';
 
 const Router = require('router');
-const textBody = require('body');
-const jsonBody = require('body/json');
+const bodyParser = require('body-parser')
+const finisher = require('../../tool/finisher');
+const validUrl = require('valid-url');
 
-let state = null; // runtime setup
-let router = new Router();
+let getAll = state => (req, res) => {
+  let { campaignings } = state;
+  res.end(JSON.stringify({ campaignings }));
+};
 
-router.get('/api/all', (req, res) => {
-  res.end(JSON.stringify({ campaignings: state.campaignings }));
-});
+let addCampaigning = state => (req, res, next) => {
+  let { title } = req.body;
+  let id = state.generateNextId(state.campaignings);
 
-router.post('/api/campaigning', (req, res, done) => {
-  jsonBody(req, res, (err, body) => {
-    if (err) {
-            res.statusCode = 500
-            return res.end("Error");
-        }
- 
-        res.statusCode = 201;
-        res.end();
-        done();
-  });
-});
+  let campaigning = { title, id, links: [] };
 
-module.exports = appState => { 
-  state = appState;
-  return (req, res, done) => router(req, res, done)
+  state.campaignings.push(campaigning);
+  res.write(JSON.stringify(campaigning));
+  next();
+};
+
+let removeCampaigning = state => (req, res, next) => {
+  let id = parseInt(req.params.id, 10);
+
+  state.campaignings = state.campaignings.filter(x => x.id !== id);
+  next();
 }
+
+let addLink = state => (req, res, next) => {
+  let campaigningId = parseInt(req.params.id, 10);
+  let { to } = req.body;
+
+  if (!/^https?:\/\//i.test(to))
+    to = 'http://' + to;
+
+  if (!validUrl.isUri(to)) {
+    res.statusCode = 400;
+    res.end();
+    return next();
+  }
+
+  let campaigning = state.campaignings.find(x => x.id === campaigningId);
+  let id = state.generateNextId(campaigning.links);
+  let link = { id, to };
+
+  campaigning.links.push(link);
+  res.write(JSON.stringify(link));
+  next();
+}
+
+let removeLink = state => (req, res, next) => {
+  let campaigningId = parseInt(req.params.id, 10);
+  let linkId = parseInt(req.params.linkId, 10);
+
+  let campaigning = state.campaignings.find(x => x.id === campaigningId);
+  campaigning.links = campaigning.links.filter(x => x.id !== linkId);
+  next();
+}
+
+let setupRouter = state => {
+  let stateUpdater = (req, res, next) => { state.update(); next(); };
+  let router = new Router({ mergeParams: true });
+  router.use(bodyParser.json());
+
+  router.get('/api/all', getAll(state), finisher);
+  router.post('/api/campaigning', addCampaigning(state), stateUpdater, finisher);
+  router.delete('/api/campaigning/:id', removeCampaigning(state), stateUpdater, finisher);
+  router.post('/api/campaigning/:id/link', addLink(state), stateUpdater, finisher);
+  router.delete('/api/campaigning/:id/link/:linkId', removeLink(state), stateUpdater, finisher);
+
+  return router;
+}
+
+module.exports = setupRouter;

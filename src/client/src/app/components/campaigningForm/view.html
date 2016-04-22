@@ -1,0 +1,23 @@
+<!-- ko ifnot: opened -->
+<button type="button" class="btn btn-default" data-bind="click: open">
+  <span class="glyphicon glyphicon-plus-sign"></span>
+  <span data-bind="text: title"></span>
+</button>
+<!-- /ko -->
+<!-- ko if: opened -->
+<!-- ko ifnot: saving -->
+<form data-bind="submit: save">
+<div class="form-group">
+    <label class="sr-only" for="inputCampaigningName" data-bind="text: placeholder"></label>
+    <input autofocus data-bind="value: name, attr: { placeholder: placeholder }" type="text" class="form-control" id="inputCampaigningName">
+  </div>
+</form>
+<!-- /ko -->
+<!-- ko if: saving -->
+<div class="progress">
+  <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+    <span class="sr-only"></span>
+  </div>
+</div>
+<!-- /ko -->
+<!-- /ko -->

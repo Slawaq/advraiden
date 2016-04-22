@@ -1,14 +1,14 @@
 import loadTemplate from 'loadTemplateByUrl';
-import campingForm from './campingForm/';
-import camping from './camping/';
+import campaigningForm from './campaigningForm/';
+import campaigning from './campaigning/';
 import link from './link/';
 import main from './main/';
 
 export default ko => api => {
   ko.components.loaders = [loadTemplate(ko)].concat(ko.components.loaders);
 
-  campingForm(ko);
+  campaigningForm(ko);
   link(ko);
-  camping(ko);
+  campaigning(ko);
   main(ko)(api);
 };
