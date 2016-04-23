@@ -7,7 +7,7 @@ let templateFromUrlLoader = ko => ({
       request
         .get(fullUrl)
         .then(({ text }) => {
-          let templateHtml = JSON.parse(text.replace('module.exports = ', '').replace(/;$/, ''));
+          let templateHtml = text;
           ko.components.defaultLoader.loadTemplate(name, templateHtml, callback);
           return true;
         });

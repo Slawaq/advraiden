@@ -1,12 +1,16 @@
 'use strict';
 
-let linker = require('./linker.js');
+let htmlRedirect = require('./redirect');
+let url = require('url');
 
 module.exports = (state, req, res) => {
-  let id = req.url.slice(4, 10);
+  let params = url.parse(req.url, true);
+  let ids = params.pathname.split('/go/')[1].split('/');
 
-  if (id.length > 0) {
-    res.statusCode = 302;
-    res.setHeader('Location', linker(id) || 'http://google.com');
-  }
+  let campaigningId = parseInt(ids[0], 10);
+  let linkId = parseInt(ids[1], 10);
+  let destination = state.redirects[campaigningId][linkId];
+  
+  res.statusCode = 200;
+  res.write(htmlRedirect(destination, params.query.subid));
 };

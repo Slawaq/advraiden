@@ -6,12 +6,18 @@
   "scripts": {
     "build:client": "node src/client/build",
     "watch:client": "npm run build:client -- watch",
-    "watch:server": "nodemon --harmony_destructuring -i **/client/**/*.* -i state",
-    "start": "npm run build:client && node --harmony_destructuring .",
-    "dev": "parallelshell \"npm run watch:client\" \"npm run watch:server\""
+
+    "watch:admin": "parallelshell \"npm run watch:client\" \"nodemon --harmony_destructuring -i **/handler/redirect/**/*.* -i **/client/**/*.* -i state admin.js\"",
+    "watch:redirect": "nodemon --harmony_destructuring -i **/handler/admin/**/*.* -i **/client/**/*.* -i state redirect.js",
+    "watch:servers": "nodemon --harmony_destructuring -i **/client/**/*.* -i state",
+
+    "admin": "npm run build:client -- prod && node --harmony_destructuring admin.js",
+    "redirect": "node redirect.js",
+
+    "dev": "parallelshell \"npm run watch:client\" \"npm run watch:servers\""
   },
   "config": {
-    "publicRedirect": "http://advraiden.info/go",
+    "publicRedirect": "http://localhost:3000/go",
     "logins": [
       {
         "login": "admin",
@@ -47,6 +53,7 @@
     "less-loader": "^2.2.2",
     "parallelshell": "^2.0.0",
     "postcss-loader": "^0.8.0",
+    "querystring": "^0.2.0",
     "router": "^1.1.4",
     "serve-static": "^1.10.2",
     "style-loader": "^0.13.0",

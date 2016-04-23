@@ -15,10 +15,14 @@ class ApplicationState {
   load() {
     this.campaignings = this.loader('campaignings');
     this.redirects = this.campaignings
-      .map(c => c.links)
-      .reduce((r, links) => r.concat(links), [])
-      .reduce((r, link) => {
-        r[link.uuid] = link;
+      .reduce((r, campaigning) => {
+        let links = campaigning
+          .links
+          .reduce((rr, link) => {
+            rr[link.id] = link.to;
+            return rr;
+          }, {});
+        r[campaigning.id] = links;
         return r;
       }, {});
   }
