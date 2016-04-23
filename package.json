@@ -23,7 +23,11 @@
         "login": "admin",
         "pass": "secret, hehehehe"
       }
-    ]
+    ],
+    "ports": {
+      "redirect": 3000,
+      "admin": 8080
+    }
   },
   "author": "",
   "license": "ISC",

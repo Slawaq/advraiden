@@ -1,6 +1,6 @@
 'use strict';
 
-const REDIRECT_PORT = 3000;
+const REDIRECT_PORT = require('./package.json').config.ports.redirect;
 
 let runServers = require('./src/tool/servers-runner');
 let loadFrom = require('./src/tool/json-loader');

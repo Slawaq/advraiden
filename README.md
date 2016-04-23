@@ -7,6 +7,15 @@ TDS - Traffic Direction Systems
 3. Open localhost:8080
 4. Redirects are being binded to 3000 port
 
+### Instruction for Prod
+1. `npm install`
+2. `npm run admin`
+3. `npm run redirect`
+
+**Important:** Don't forget about PM2!
+
+**Important:** You can setup ports and another config in [package.json](https://github.com/Slawaq/advraiden/blob/master/package.json).
+
 ### Preview
 ![Admin](http://i.imgur.com/XgQopYJ.png?1)
 

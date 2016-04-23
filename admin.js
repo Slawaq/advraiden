@@ -1,6 +1,6 @@
 'use strict';
 
-const ADMIN_PORT = 8080;
+const ADMIN_PORT = require('./package.json').config.ports.admin;
 
 let runServers = require('./src/tool/servers-runner');
 let loadFrom = require('./src/tool/json-loader');

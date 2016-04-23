@@ -13,8 +13,8 @@ class ApplicationState {
   }
 
   load() {
-    this.campaignings = this.loader('campaignings');
-    this.redirects = this.campaignings
+    let campaignings = this.loader('campaignings');
+    let redirects = campaignings
       .reduce((r, campaigning) => {
         let links = campaigning
           .links
@@ -25,6 +25,9 @@ class ApplicationState {
         r[campaigning.id] = links;
         return r;
       }, {});
+
+    this.campaignings = campaignings;
+    this.redirects = redirects;
   }
 
   update() {
