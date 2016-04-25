@@ -18,7 +18,7 @@
     <tbody data-bind="foreach: links">
     <tr>
       <td><a data-bind="text: $data.to.replace(/^https?:\/\//, ''), attr: { href: $data.to }" target="_blank"></a></td>
-      <td><a data-bind="text: $data.source.replace(/^https?:\/\//, ''), attr: { href: $data.source }" target="_blank"></a></td>
+      <td><a data-bind="text: $data.source.replace(/^https?:\/\//, '') + '?subid=', attr: { href: $data.source }" target="_blank"></a></td>
       <td class="text-right" data-bind="text: 0"></td>
       <td class="text-right">
         <span class="glyphicon glyphicon-remove camping-remove" title="remove camping" data-bind="click: $parent.removeLink.bind($parent)"></span>
