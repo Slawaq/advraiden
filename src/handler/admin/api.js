@@ -43,7 +43,7 @@ let addLink = state => (req, res, next) => {
   }
 
   let campaigning = state.campaignings.find(x => x.id === campaigningId);
-  let id = state.generateNextId(campaigning.links) + 100021;
+  let id = state.generateNextId(campaigning.links) + 436;
   let link = { id, to };
 
   campaigning.links.push(link);

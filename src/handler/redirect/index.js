@@ -3,7 +3,7 @@
 let go = require('./go');
 
 module.exports = state => {
-  setInterval(_ => state.load(), 1000);
+  setInterval(() => state.load(), 1000);
 
   return (req, res) => {
     try {
