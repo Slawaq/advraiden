@@ -9,7 +9,7 @@ module.exports = (to, subid) =>
       </head>
       <body>
         <script>
-            document.location.href = "${to.replace(/\//g,'\\/')}?id=${subid ? subid : ''}";
+            document.location.href = "${to.replace(/\//g,'\\/')}${to.indexOf('?') === -1 ? '?' : '&'}id=${subid ? subid : ''}";
         </script>
       </body>
     </html>
