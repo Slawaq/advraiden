@@ -15,15 +15,7 @@
       <th width="20%" class="text-right">total redirects</th>
       <th width="10%" class="text-right">actions</th>
     </thead>
-    <tbody data-bind="foreach: links" style="font-size: 16px">
-    <tr>
-      <td><a data-bind="text: $data.to.replace(/^https?:\/\//, ''), attr: { href: $data.to }" target="_blank"></a></td>
-      <td><a data-bind="text: $data.source.replace(/^https?:\/\//, '') + '?subid=', attr: { href: $data.source + '?subid=' }" target="_blank"></a></td>
-      <td class="text-right" data-bind="text: 0"></td>
-      <td class="text-right">
-        <span class="glyphicon glyphicon-remove camping-remove" title="remove camping" data-bind="click: $parent.removeLink.bind($parent)"></span>
-      </td>
-    </tr>
+    <tbody data-bind="template: { foreach: links, name: 'camp-link' }" style="font-size: 16px">
     </tbody>
   </table>
   <div class="panel-footer">
@@ -31,4 +23,13 @@
   </div>
   <!-- /ko -->
 </div>
-
+<script type="text/html" id="camp-link">
+  <tr>
+    <td><a data-bind="text: getDestinationView(), attr: { href: getDestinationLink() }" target="_blank"></a></td>
+    <td><a data-bind="text: getSourceView(), attr: { href: getSourceLink() }" target="_blank"></a></td>
+    <td class="text-right" data-bind="text: 0"></td>
+    <td class="text-right">
+      <span class="glyphicon glyphicon-remove camping-remove" title="remove camping" data-bind="click: remove"></span>
+    </td>
+  </tr>
+</script>

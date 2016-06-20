@@ -1,9 +1,10 @@
-'use strict';
+'use strict'
 
-let path = require('path');
-let webpack = require('webpack');
-let watch = process.argv.slice(2).some(x => x.startsWith('watch'));
-let prod = process.argv.slice(2).some(x => x.startsWith('prod'));
+let path = require('path')
+let webpack = require('webpack')
+let watch = process.argv.slice(2).some(x => x.startsWith('watch'))
+let prod = process.argv.slice(2).some(x => x.startsWith('prod'))
+let macros = require('../../package.json').config.macros
 
 let compiler = webpack({
   target: 'web',
@@ -22,7 +23,7 @@ let compiler = webpack({
     path.join(__dirname, 'src/app.js'),
   ],
   module: {
-    loaders: [{
+    loaders: [ {
       test: /\.html$/,
       exclude: /index/,
       loader: 'file?name=[path][name].[ext]',
@@ -35,8 +36,8 @@ let compiler = webpack({
       exclude: /node_modules/,
       loader: 'babel',
       query: {
-        plugins: ['transform-runtime', 'transform-es2015-modules-commonjs'],
-        presets: ['es2015', 'stage-0'],
+        plugins: [ 'transform-runtime', 'transform-es2015-modules-commonjs' ],
+        presets: [ 'es2015', 'stage-0' ],
       }
     },
     { test: /\.less$/, loader: 'style!css!postcss-loader!less' },
@@ -56,28 +57,27 @@ let compiler = webpack({
     new webpack.DefinePlugin({
       'process.env': {
         'NODE_ENV': JSON.stringify(prod ? 'production' : 'development')
-      }
+      },
+      'ADV_MACROS': JSON.stringify(macros)
     })
   ]
-});
+})
 
-if (watch) {
+if (watch)
   compiler.watch({
     aggregateTimeout: 300,
     poll: true
-  }, function(err, stats) {
-    console.log(stats.toString({ colors: true }));
-    if (err) {
-      console.error(err);
-    }
-  });
-} else {
+  }, function (err, stats) {
+    console.log(stats.toString({ colors: true }))
+    if (err)
+      console.error(err)
+  })
+else
   compiler.run((err, stats) => {
-    console.log(stats.toString({ colors: true }));
+    console.log(stats.toString({ colors: true }))
     if (err) {
-      console.error(err);
-      process.exit(1);
+      console.error(err)
+      process.exit(1)
     }
-    process.exit(0);
-  });
-}
+    process.exit(0)
+  })

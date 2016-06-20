@@ -1,7 +1,7 @@
 export default class Api {
 
   all() {
-    return jQuery.getJSON('/api/all');
+    return jQuery.getJSON('/api/all')
   }
 
   addCampaigning(title) {
@@ -11,21 +11,21 @@ export default class Api {
       data: JSON.stringify({ title }), 
       contentType:'application/json', 
       dataType: 'json'
-    }));
+    }))
   }
 
   removeCampaigning(id) {
     return Promise.resolve(jQuery.ajax({
       method: 'DELETE', 
       url: `/api/campaigning/${id}`, 
-    }));
+    }))
   }
 
   removeLink(id, linkId) {
     return Promise.resolve(jQuery.ajax({
       method: 'DELETE', 
       url: `/api/campaigning/${id}/link/${linkId}`, 
-    }));
+    }))
   }
 
   addLink(id, to) {
@@ -35,7 +35,7 @@ export default class Api {
       data: JSON.stringify({ to }), 
       contentType:'application/json', 
       dataType: 'json'
-    }));
+    }))
   }
 
 }
