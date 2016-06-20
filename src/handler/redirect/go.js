@@ -20,7 +20,7 @@ module.exports = (state, req, res) => {
   let campaigningId = parseInt(ids[0], 10)
   let linkId = parseInt(ids[1], 10)
   let destination = getDestinationUri(state.redirects[campaigningId][linkId])(params.query.subid || '')
-  
+
   res.statusCode = 200
   res.write(htmlRedirect(destination))
 
@@ -35,6 +35,6 @@ let getDestinationUri = destination => subid => {
     let right = destination.substring(macrosPosition + macros.length)
     return left + subid + right
   }
-  
-  return destination + (destination.indexOf('?') === -1 ? '?' : '&') + 'id=' + subid ? subid : ''
+
+  return destination + (destination.indexOf('?') === -1 ? '?' : '&') + 'id=' + subid
 }
