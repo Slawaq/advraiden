@@ -7,11 +7,11 @@
     "build:client": "node src/client/build",
     "watch:client": "npm run build:client -- watch",
 
-    "watch:admin": "parallelshell \"npm run watch:client\" \"nodemon --harmony_destructuring -i **/handler/redirect/**/*.* -i **/client/**/*.* -i state admin.js\"",
-    "watch:redirect": "nodemon --harmony_destructuring -i **/handler/admin/**/*.* -i **/client/**/*.* -i state redirect.js",
-    "watch:servers": "nodemon --harmony_destructuring -i **/client/**/*.* -i state",
+    "watch:admin": "parallelshell \"npm run watch:client\" \"nodemon --es_staging -i **/handler/redirect/**/*.* -i **/client/**/*.* -i state admin.js\"",
+    "watch:redirect": "nodemon --es_staging -i **/handler/admin/**/*.* -i **/client/**/*.* -i state redirect.js",
+    "watch:servers": "nodemon --es_staging -i **/client/**/*.* -i state",
 
-    "admin": "npm run build:client -- prod && node --harmony_destructuring admin.js",
+    "admin": "npm run build:client -- prod && node --es_staging admin.js",
     "redirect": "node redirect.js",
 
     "dev": "parallelshell \"npm run watch:client\" \"npm run watch:servers\""
