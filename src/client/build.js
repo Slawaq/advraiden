@@ -2,6 +2,7 @@
 
 let path = require('path');
 let webpack = require('webpack');
+let ExtractTextPlugin = require('extract-text-webpack-plugin');
 let watch = process.argv.slice(2).some(x => x.startsWith('watch'));
 let prod = process.argv.slice(2).some(x => x.startsWith('prod'));
 
@@ -31,19 +32,20 @@ let compiler = webpack({
       include: /index/,
       loader: 'file?name=[name].[ext]',
     }, {
-      test: /\.js$/,
+      test: /\.jsx?$/,
       exclude: /node_modules/,
       loader: 'babel',
       query: {
-        plugins: ['transform-runtime', 'transform-es2015-modules-commonjs'],
-        presets: ['es2015', 'stage-0'],
+        plugins: ['transform-runtime', 'transform-es2015-modules-commonjs', 'transform-flow-strip-types'],
+        presets: ['es2015', 'stage-0', 'react'],
       }
     },
     { test: /\.less$/, loader: 'style!css!postcss-loader!less' },
     { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: 'file' },
     { test: /\.(woff|woff2)$/, loader: 'url?prefix=font/&limit=5000' },
     { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/octet-stream' },
-    { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=image/svg+xml' }
+    { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=image/svg+xml' },
+    { test: /\.css$/, loader: ExtractTextPlugin.extract('style-loader', 'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader') }
     ]
   },
   node: {
@@ -52,7 +54,11 @@ let compiler = webpack({
     tls: 'empty',
     child_process: 'empty'
   },
+  postcss: [
+    require('autoprefixer-core')
+  ],
   plugins: [
+    new ExtractTextPlugin('style.css', { allChunks: true }),
     new webpack.DefinePlugin({
       'process.env': {
         'NODE_ENV': JSON.stringify(prod ? 'production' : 'development')
