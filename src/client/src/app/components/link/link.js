@@ -4,6 +4,7 @@ class Link {
     this.id = props.id
     this.source = props.source
     this.to = props.to
+    this.removeDelegate = props.remove
   }
 
   getSourceView() {
@@ -26,7 +27,7 @@ class Link {
     let accepted = confirm(`Remove link - ${this.getDestinationView()}?`)
 
     if (accepted)
-      this.remove(this.id)
+      this.removeDelegate(this.id)
   }
 
 }
