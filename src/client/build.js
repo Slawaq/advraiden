@@ -67,7 +67,7 @@ if (watch)
   compiler.watch({
     aggregateTimeout: 300,
     poll: true
-  }, function (err, stats) {
+  }, (err, stats) => {
     console.log(stats.toString({ colors: true }))
     if (err)
       console.error(err)

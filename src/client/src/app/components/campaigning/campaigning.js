@@ -44,7 +44,7 @@ export default class Campaigning {
 
   async addLink(to) {
     let link = await this.props.addLink(this.id, to)
-    this.links.push({ ...link, source: this.props.linkGenerator(this.id)(link.id) })
+    this.links.push(this.getLink(link))
   }
 
   getLinkFormProps() {
