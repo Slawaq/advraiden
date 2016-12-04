@@ -6,7 +6,7 @@ class App {
   loaded = ko.observable(false);
 
   constructor(api) {
-    window.api = api //todo: remove (It was used for test)
+    window.api = api //todo: remove (It was using for testing)
     this.api = api
     this.load(api)
   }
@@ -33,6 +33,7 @@ class App {
       remove: ::this.removeCampaigning,
       removeLink: ::this.api.removeLink,
       addLink: ::this.api.addLink,
+      changeLink: ::this.api.changeLink,
       linkGenerator: this.linkGenerator,
       ...data
     }

@@ -25,11 +25,21 @@
 </div>
 <script type="text/html" id="camp-link">
   <tr>
-    <td><a data-bind="text: getDestinationView(), attr: { href: getDestinationLink() }" target="_blank"></a></td>
+    <td>
+      <!-- ko ifnot: editable -->
+      <a data-bind="text: getDestinationView(), attr: { href: getDestinationLink() }" target="_blank"></a>
+      <!-- /ko -->
+      <!-- ko if: editable -->
+      <form data-bind="submit: save">
+        <input data-bind="value: newDestination" class="form-control"/>
+      </form>
+      <!-- /ko -->
+    </td>
     <td><a data-bind="text: getSourceView(), attr: { href: getSourceLink() }" target="_blank"></a></td>
     <td class="text-right" data-bind="text: 0"></td>
     <td class="text-right">
       <span class="glyphicon glyphicon-remove camping-remove" title="remove camping" data-bind="click: remove"></span>
+      <span class="glyphicon glyphicon-edit camping-remove" title="edit camping" data-bind="click: toggleEdit"></span>
     </td>
   </tr>
 </script>

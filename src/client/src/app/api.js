@@ -38,4 +38,14 @@ export default class Api {
     }))
   }
 
+  changeLink(id, linkId, to) {
+    return Promise.resolve(jQuery.ajax({
+      method: 'PUT',
+      url: `/api/campaigning/${id}/link/${linkId}`, 
+      data: JSON.stringify({ to }), 
+      contentType:'application/json', 
+      dataType: 'json'
+    }))
+  }
+
 }

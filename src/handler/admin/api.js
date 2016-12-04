@@ -31,16 +31,7 @@ let removeCampaigning = state => (req, res, next) => {
 
 let addLink = state => (req, res, next) => {
   let campaigningId = parseInt(req.params.id, 10)
-  let { to } = req.body
-
-  if (!/^https?:\/\//i.test(to))
-    to = 'http://' + to
-
-  if (!validUrl.isUri(to)) {
-    res.statusCode = 400
-    res.end()
-    return next()
-  }
+  let to = addProtocol(req.body.to)
 
   let campaigning = state.campaignings.find(x => x.id === campaigningId)
   let id = state.generateNextId(campaigning.links) + 436
@@ -48,6 +39,20 @@ let addLink = state => (req, res, next) => {
 
   campaigning.links.push(link)
   res.write(JSON.stringify(link))
+  next()
+}
+
+let changeLink = state => (req, res, next) => {
+  let campaigningId = parseInt(req.params.id, 10)
+  let linkId = parseInt(req.params.linkId, 10)
+  let to = addProtocol(req.body.to)
+
+  let campaigning = state.campaignings.find(x => x.id === campaigningId)
+  let link = campaigning.links.find(x => x.id === linkId)
+  
+  link.to = to
+
+  res.write(JSON.stringify(null))
   next()
 }
 
@@ -60,6 +65,8 @@ let removeLink = state => (req, res, next) => {
   next()
 }
 
+let addProtocol = link => /^https?:\/\//i.test(link) ? link : 'http://' + link
+
 let setupRouter = state => {
   let stateUpdater = (req, res, next) => { state.update(); next() }
   let router = new Router({ mergeParams: true })
@@ -69,6 +76,7 @@ let setupRouter = state => {
   router.post('/api/campaigning', addCampaigning(state), stateUpdater, finisher)
   router.delete('/api/campaigning/:id', removeCampaigning(state), stateUpdater, finisher)
   router.post('/api/campaigning/:id/link', addLink(state), stateUpdater, finisher)
+  router.put('/api/campaigning/:id/link/:linkId', changeLink(state), stateUpdater, finisher)
   router.delete('/api/campaigning/:id/link/:linkId', removeLink(state), stateUpdater, finisher)
 
   return router

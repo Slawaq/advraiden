@@ -6,13 +6,13 @@ export default class Campaigning {
   opened = ko.observable(false);
 
   constructor(props) {
+    this.props = props
+
     this.id = props.id
     this.linkGenerator = props.linkGenerator
     this.title = ko.observable(props.title)
     this.links = ko.observableArray(props.links.map(::this.getLink))
     this.isZeroLinks = ko.computed(() => this.links().length === 0)
-
-    this.props = props
   }
 
   toggleOpen() {
@@ -23,7 +23,8 @@ export default class Campaigning {
     return new Link({ 
       ...linkData, 
       source: this.linkGenerator(this.id)(linkData.id), 
-      remove: ::this.removeLink
+      remove: ::this.removeLink,
+      change: (...args) => this.props.changeLink(this.id, ...args)
     })
   }
 
