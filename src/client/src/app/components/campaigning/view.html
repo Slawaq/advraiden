@@ -1,11 +1,21 @@
 <div class="panel panel-default">
   <div class="panel-heading" style="cursor: pointer" data-bind="click: toggleOpen">
     <span class="glyphicon glyphicon-menu-hamburger" style="cursor: pointer" title="show links"></span>
+    <!-- ko ifnot: editable -->
     <span class="panel-title">
       <span data-bind="text: title" style="cursor: pointer"></span>
       <span class="glyphicon glyphicon-remove camping-remove" title="remove camping" data-bind="click: remove"></span>
+      <span class="glyphicon glyphicon-edit camping-remove" title="edit camping" data-bind="click: toggleEdit"></span>
       <span class="link-count" title="link count" data-bind="text: links().length, css: { 'link-zero-count': isZeroLinks }"></span>
     </span>
+    <!-- /ko -->
+    <!-- ko if: editable -->
+    <span class="panel-title">
+      <form data-bind="submit: edit" style="display: inline-block;width: 80%;">
+        <input autofocus data-bind="value: newTitle" type="text" class="form-control" id="inputCampaigningName">
+      </form>
+    </span>
+    <!-- /ko -->
   </div>
   <!-- ko if: opened -->
   <table class="table">

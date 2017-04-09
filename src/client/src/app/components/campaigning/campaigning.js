@@ -4,6 +4,8 @@ import Link from '../link/link'
 export default class Campaigning {
 
   opened = ko.observable(false);
+  editable = ko.observable(false);
+  newTitle = ko.observable('');
 
   constructor(props) {
     this.props = props
@@ -11,12 +13,14 @@ export default class Campaigning {
     this.id = props.id
     this.linkGenerator = props.linkGenerator
     this.title = ko.observable(props.title)
+    this.newTitle(this.title())
     this.links = ko.observableArray(props.links.map(::this.getLink))
     this.isZeroLinks = ko.computed(() => this.links().length === 0)
   }
 
   toggleOpen() {
-    this.opened(!this.opened())
+    if (!this.editable())
+      this.opened(!this.opened())
   }
 
   getLink (linkData) {
@@ -36,6 +40,19 @@ export default class Campaigning {
 
     event.stopPropagation()
     return false
+  }
+
+  toggleEdit(_, event) {
+    this.editable(!this.editable())
+
+    event.stopPropagation()
+    return false
+  }
+
+  async edit() {
+    await this.props.changeTitle(this.id, this.newTitle())
+    this.editable(false)
+    this.title(this.newTitle())
   }
 
   async removeLink(linkId) {

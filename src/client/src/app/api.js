@@ -48,4 +48,14 @@ export default class Api {
     }))
   }
 
+  changeCampaigning(id, title) {
+    return Promise.resolve(jQuery.ajax({
+      method: 'PUT',
+      url: `/api/campaigning/${id}`, 
+      data: JSON.stringify({ title }), 
+      contentType:'application/json', 
+      dataType: 'json'
+    }))
+  }
+
 }

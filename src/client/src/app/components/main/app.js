@@ -36,6 +36,7 @@ class App {
       addLink: ::this.api.addLink,
       changeLink: ::this.api.changeLink,
       linkGenerator: this.linkGenerator,
+      changeTitle: ::this.api.changeCampaigning,
       ...data
     }
   }
