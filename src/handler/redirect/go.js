@@ -1,17 +1,8 @@
 'use strict'
 
-const toFile = require('../../tool/toFile.js')('stats')
 const htmlRedirect = require('./redirect')
 const url = require('url')
 const macros = require('../../../config.json').macros
-
-let stats = []
-
-setInterval(() => {
-  let toFlush = stats.slice(0)
-  stats = []
-  toFile(toFlush)
-}, 1000)
 
 module.exports = (state, req, res) => {
   let params = url.parse(req.url, true)
@@ -23,8 +14,6 @@ module.exports = (state, req, res) => {
 
   res.statusCode = 200
   res.write(htmlRedirect(destination))
-
-  //stats.push(req.url)
 }
 
 let getDestinationUri = destination => subid => {

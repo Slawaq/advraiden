@@ -10,5 +10,6 @@
     "ports": {
       "redirect": 3000,
       "admin": 8080
-    }
+    },
+    "contact": "lol@email.com"
   }

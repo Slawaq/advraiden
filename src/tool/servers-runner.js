@@ -1,6 +1,6 @@
-'use strict';
+'use strict'
 
-let http = require('http');
+let http = require('http')
 
 module.exports = servers => servers
   .map(cfg => ({
@@ -9,7 +9,7 @@ module.exports = servers => servers
   }))
   .forEach(cfg => {
     let server = http.createServer((req, res) => {
-      cfg.handler(req, res);
-    });
-    server.listen(cfg.port);
-  });
+      cfg.handler(req, res)
+    })
+    server.listen(cfg.port)
+  })
