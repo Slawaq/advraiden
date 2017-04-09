@@ -1,5 +1,5 @@
 ### TDS based on node.js
-TDS - Traffic Direction Systems
+TDS - Traffic Distribution System
 
 ### Instruction for Dev Run 
 1. `npm install`
