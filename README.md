@@ -14,7 +14,7 @@ TDS - Traffic Direction Systems
 
 **Important:** Don't forget about PM2!
 
-**Important:** You can setup ports and another config in [package.json](https://github.com/Slawaq/advraiden/blob/master/package.json).
+**Important:** You can setup ports and another config in [config.json](https://github.com/Slawaq/advraiden/blob/master/config.json).
 
 ### Preview
 ![Admin](http://i.imgur.com/XgQopYJ.png?1)

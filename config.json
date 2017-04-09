@@ -1,0 +1,14 @@
+{
+    "macros": "ADVSUBID",
+    "publicRedirect": "http://localhost:3000/go",
+    "logins": [
+      {
+        "login": "admin",
+        "pass": "secret, hehehehe"
+      }
+    ],
+    "ports": {
+      "redirect": 3000,
+      "admin": 8080
+    }
+  }

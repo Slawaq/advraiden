@@ -1,7 +1,7 @@
 'use strict'
 
-const ADMIN_PORT = require('./package.json').config.ports.admin
-const REDIRECT_PORT = require('./package.json').config.ports.redirect
+const ADMIN_PORT = require('./config.json').ports.admin
+const REDIRECT_PORT = require('./config.json').ports.redirect
 
 let runServers = require('./src/tool/servers-runner')
 let loadFrom = require('./src/tool/json-loader')

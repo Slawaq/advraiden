@@ -4,7 +4,7 @@ let path = require('path')
 let webpack = require('webpack')
 let watch = process.argv.slice(2).some(x => x.startsWith('watch'))
 let prod = process.argv.slice(2).some(x => x.startsWith('prod'))
-let macros = require('../../package.json').config.macros
+let macros = require('../../config.json').macros
 
 let compiler = webpack({
   target: 'web',

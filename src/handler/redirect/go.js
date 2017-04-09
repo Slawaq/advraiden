@@ -3,7 +3,7 @@
 const toFile = require('../../tool/toFile.js')('stats')
 const htmlRedirect = require('./redirect')
 const url = require('url')
-const macros = require('../../../package.json').config.macros
+const macros = require('../../../config.json').macros
 
 let stats = []
 

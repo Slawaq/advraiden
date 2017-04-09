@@ -4,7 +4,7 @@ const Router = require('router')
 const bodyParser = require('body-parser')
 const finisher = require('../../tool/finisher')
 const validUrl = require('valid-url')
-const publicRedirect = require('../../../package.json').config.publicRedirect
+const publicRedirect = require('../../../config.json').publicRedirect
 
 let getAll = state => (req, res) => {
   let { campaignings } = state
