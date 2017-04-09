@@ -35,7 +35,17 @@
       </form>
       <!-- /ko -->
     </td>
-    <td><a data-bind="text: getSourceView(), attr: { href: getSourceLink() }" target="_blank"></a></td>
+    <td>
+      <span data-bind="fadeVisible: !copied()">
+      <span class="glyphicon glyphicon-copy camping-copy" title="copy link" data-bind="click: copy"></span>
+      </span>
+
+      <span data-bind="fadeVisible: copied()">
+      <span class="glyphicon glyphicon-ok camping-copied" title="copied!"></span>
+      </span>
+
+      <a data-bind="text: getSourceView(), attr: { href: getSourceLink() }" target="_blank"></a>
+    </td>
     <td class="text-right" data-bind="text: 0"></td>
     <td class="text-right">
       <span class="glyphicon glyphicon-remove camping-remove" title="remove camping" data-bind="click: remove"></span>

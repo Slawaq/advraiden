@@ -1,4 +1,5 @@
 import ko from 'knockout'
+import copy from 'copy-to-clipboard'
 
 class Link {
 
@@ -8,6 +9,7 @@ class Link {
     this.to = ko.observable(props.to)
     this.removeDelegate = props.remove
     this.changeDelegate = props.change
+    this.copied = ko.observable(false)
 
     this.editable = ko.observable(false)
     this.saving = ko.observable(false)
@@ -28,6 +30,11 @@ class Link {
 
   getDestinationLink() {
     return this.to()
+  }
+
+  copy() {
+    this.copied(copy(this.getSourceLink()))
+    setTimeout(() => this.copied(false), 1000)
   }
 
   async remove() {
