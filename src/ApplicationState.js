@@ -12,8 +12,8 @@ class ApplicationState {
     return this.redirects[redirectId].to
   }
 
-  load() {
-    let campaignings = this.loader('campaignings')
+  async load() {
+    let campaignings = await this.loader('campaignings')
     let redirects = campaignings
       .reduce((r, campaigning) => {
         let links = campaigning
@@ -30,8 +30,8 @@ class ApplicationState {
     this.redirects = redirects
   }
 
-  update() {
-    this.saver('campaignings')(this.campaignings)
+  async update() {
+    await this.saver('campaignings')(this.campaignings)
   }  
 
   generateNextId(entities) {

@@ -1,11 +1,12 @@
 'use strict'
 
+const Promise = require('bluebird')
 const path = require('path')
-const fs = require('fs')
+const fs = Promise.promisifyAll(require('fs'))
 
-module.exports = base => name => json => {
+module.exports = base => name => async json => {
   let jsonPath = path.join(__dirname, base, name.endsWith('.json') ? name : name + '.json')
-  let file = fs.openSync(jsonPath, 'w+')
-  fs.writeSync(file, JSON.stringify(json, null, 2), 'utf8', { flags: 'w+' })
-  fs.closeSync(file)
+  let file = await fs.openAsync(jsonPath, 'w+')
+  await fs.writeAsync(file, JSON.stringify(json, null, 2), 'utf8', { flags: 'w+' })
+  await fs.closeAsync(file)
 }

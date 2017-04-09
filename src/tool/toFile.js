@@ -1,9 +1,10 @@
 'use strict'
 
-const fs = require('fs')
+const Promise = require('bluebird')
+const fs = Promise.promisifyAll(require('fs'))
 
-module.exports = filename => array => {
-  let file = fs.openSync(filename, 'a')
-  fs.writeSync(file, array.map(x => `${x}\r\n`), 'utf8')
-  fs.closeSync(file)
+module.exports = filename => async array => {
+  let file = await fs.openAsync(filename, 'a')
+  await fs.writeAsync(file, array.map(x => `${x}\r\n`), 'utf8')
+  await fs.closeAsync(file)
 }

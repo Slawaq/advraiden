@@ -68,7 +68,7 @@ let removeLink = state => (req, res, next) => {
 let addProtocol = link => /^https?:\/\//i.test(link) ? link : 'http://' + link
 
 let setupRouter = state => {
-  let stateUpdater = (req, res, next) => { state.update(); next() }
+  let stateUpdater = (req, res, next) => { state.update().then(next) }
   let router = new Router({ mergeParams: true })
   router.use(bodyParser.json())
 
