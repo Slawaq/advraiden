@@ -13,7 +13,7 @@ let getAll = state => (req, res) => {
 
 let addCampaigning = state => (req, res, next) => {
   let { title } = req.body
-  let id = state.generateNextId(state.campaignings) + 214
+  let id = state.generateNextId(state.campaignings) + 76
 
   let campaigning = { title, id, links: [] }
 
@@ -34,7 +34,7 @@ let addLink = state => (req, res, next) => {
   let to = addProtocol(req.body.to)
 
   let campaigning = state.campaignings.find(x => x.id === campaigningId)
-  let id = state.generateNextId(campaigning.links) + 436
+  let id = state.generateNextId(campaigning.links) + 37
   let link = { id, to }
 
   campaigning.links.push(link)

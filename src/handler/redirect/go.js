@@ -2,14 +2,20 @@
 
 const htmlRedirect = require('./redirect')
 const url = require('url')
-const macros = require('../../../config.json').macros
+const { macros } = require('../../../config.json')
+const { path, combine, reversed } = require('../../../config.json').redirect
+
+const combineTemplate = `^${combine.replace('{0}', '(\\d+)').replace('{1}', '(\\d+)')}.*`
+const idsExtractRegExp = new RegExp(combineTemplate)
 
 module.exports = (state, req, res) => {
   let params = url.parse(req.url, true)
-  let ids = params.pathname.split('/go/')[1].split('/')
+  
+  let idsWithParams = params.path.split('/' + path)[1]
+  let extracted = idsExtractRegExp.exec(idsWithParams) || []
 
-  let campaigningId = parseInt(ids[0], 10)
-  let linkId = parseInt(ids[1], 10)
+  let campaigningId = parseInt(extracted[reversed ? 2 : 1], 10)
+  let linkId = parseInt(extracted[reversed ? 1 : 2], 10)
   let destination = getDestinationUri(state.redirects[campaigningId][linkId])(params.query.subid || '')
 
   res.statusCode = 200

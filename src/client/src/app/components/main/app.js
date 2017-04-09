@@ -1,4 +1,5 @@
 import ko from 'knockout'
+import linkGenerator from '../../../../../tool/linkGenerator'
 
 class App {
 
@@ -14,7 +15,7 @@ class App {
   async load(api) {
     let data = await api.all()
     this.campaignings(data.campaignings)
-    this.linkGenerator = campaigningId => id => `${data.publicRedirect}/${campaigningId}/${id}`
+    this.linkGenerator = linkGenerator
     this.loaded(true)
   }
   

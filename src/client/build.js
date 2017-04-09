@@ -40,6 +40,7 @@ let compiler = webpack({
         presets: [ 'es2015', 'stage-0' ],
       }
     },
+    { test: /\.json$/, loader: 'json-loader' },
     { test: /\.less$/, loader: 'style!css!postcss-loader!less' },
     { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: 'file' },
     { test: /\.(woff|woff2)$/, loader: 'url?prefix=font/&limit=5000' },

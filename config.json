@@ -1,6 +1,12 @@
 {
-    "macros": "ADVSUBID",
-    "publicRedirect": "http://localhost:3000/go",
+    "macros": "{subid}",
+    "redirect": {
+      "scheme": "http",
+      "domain": "localhost:3000",
+      "path": "go",
+      "combine": "/{0}/{1}",
+      "reversed": false
+    },
     "logins": [
       {
         "login": "admin",

@@ -17,11 +17,17 @@ class Link {
   }
 
   getSourceView() {
-    return this.source.replace(/^https?:\/\//, '') + '?subid=' + ADV_MACROS
+    return `${this.source.replace(/^https?:\/\//, '')}${this.getJoinSymbol()}subid=${ADV_MACROS}`
   }
 
   getSourceLink() {
-    return this.source + '?subid=' + ADV_MACROS
+    return `${this.source}${this.getJoinSymbol()}subid=${ADV_MACROS}`
+  }
+
+  getJoinSymbol() {
+    return this.source.indexOf('?') > -1 
+      ? '&' 
+      : '?'
   }
 
   getDestinationView() {
@@ -58,7 +64,7 @@ class Link {
 
     if (accepted) {
       this.saving(true)
-      let res = await this.changeDelegate(this.id, newDestination)
+      await this.changeDelegate(this.id, newDestination)
       this.saving(false)
       this.editable(false)
       this.to(newDestination)
