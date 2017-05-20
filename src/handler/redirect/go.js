@@ -35,10 +35,15 @@ module.exports = (state, logger, req, res) => {
     subid: params.query.subid,
     adress: req.socket.address(),
     headers: req.headers,
-    geo: geoip.lookup(req.socket.address().address),
+    geo: geoip.lookup(getIp(req)),
     userAgent: parser.setUA(req.headers['user-agent']).getResult()
   })
 }
+
+let getIp = req => req.headers['x-forwarded-for'] || 
+     req.connection.remoteAddress || 
+     req.socket.remoteAddress ||
+     req.connection.socket.remoteAddress;
 
 let getDestinationUri = destination => subid => {
   let macrosPosition = destination.indexOf(macros)
