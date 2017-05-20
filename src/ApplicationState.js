@@ -23,6 +23,7 @@ class ApplicationState {
             return rr
           }, {})
         r[campaigning.id] = links
+        r[campaigning.id].title = campaigning.title
         return r
       }, {})
 

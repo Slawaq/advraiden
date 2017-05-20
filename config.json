@@ -7,6 +7,11 @@
       "combine": "/{0}/{1}",
       "reversed": false
     },
+    "logs": {
+      "indexPrefix": "none", 
+      "logsElasticUrl": "",
+      "httpAuth": ""
+    },
     "logins": [
       {
         "login": "admin",

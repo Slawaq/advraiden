@@ -1,5 +1,9 @@
 'use strict'
 
+const UAParser = require('ua-parser-js')
+
+const geoip = require('geoip-lite')
+
 const htmlRedirect = require('./redirect')
 const url = require('url')
 const { macros } = require('../../../config.json')
@@ -8,7 +12,7 @@ const { path, combine, reversed } = require('../../../config.json').redirect
 const combineTemplate = `^${combine.replace('{0}', '(\\d+)').replace('{1}', '(\\d+)')}.*`
 const idsExtractRegExp = new RegExp(combineTemplate)
 
-module.exports = (state, req, res) => {
+module.exports = (state, logger, req, res) => {
   let params = url.parse(req.url, true)
   
   let idsWithParams = params.path.split('/' + path)[1]
@@ -20,6 +24,20 @@ module.exports = (state, req, res) => {
 
   res.statusCode = 200
   res.write(htmlRedirect(destination))
+
+  let parser = new UAParser()
+
+  logger.info('redirect', { 
+    campaigningId, 
+    campaigningTitle: state.redirects[campaigningId].title, 
+    linkId,
+    link: state.redirects[campaigningId][linkId],
+    subid: params.query.subid,
+    adress: req.socket.address(),
+    headers: req.headers,
+    geo: geoip.lookup(req.socket.address().address),
+    userAgent: parser.setUA(req.headers['user-agent']).getResult()
+  })
 }
 
 let getDestinationUri = destination => subid => {

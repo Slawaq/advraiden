@@ -36,6 +36,7 @@
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.8.5",
     "finalhandler": "^0.4.1",
+    "geoip-lite": "^1.2.1",
     "html-loader": "^0.4.0",
     "http-server": "^0.8.5",
     "imports-loader": "^0.6.5",
@@ -51,9 +52,12 @@
     "style-loader": "^0.13.0",
     "superagent": "^1.7.1",
     "superagent-bluebird-promise": "^3.0.0",
+    "ua-parser-js": "^0.7.12",
     "url-loader": "^0.5.7",
     "valid-url": "^1.0.9",
-    "webpack": "^1.12.11"
+    "webpack": "^1.12.11",
+    "winston": "^2.3.1",
+    "winston-elasticsearch": "^0.5.0"
   },
   "repository": {
     "type": "git",

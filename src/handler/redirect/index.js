@@ -1,8 +1,15 @@
 'use strict'
 
+const { path, logs } = require('../../../config.json').redirect
+const logger = require('winston')
+require('winston-elasticsearch')
+
+logger
+  .add(logger.transports.Elasticsearch, { level: 'info', indexPrefix: logs.indexPrefix, clientOpts: { host: logs.logsElasticUrl, httpAuth: logs.httpAuth } })
+  .add(logger.transports.Console, { level: 'error' })
+
 const go = require('./go')
 const welcome = require('./welcome')
-const { path } = require('../../../config.json').redirect
 
 module.exports = state => {
   setInterval(() => state.load(), 1000)
@@ -10,14 +17,14 @@ module.exports = state => {
   return (req, res) => {
     try {
       if (req.url.startsWith('/' + path))
-        go(state, req, res)
+        go(state, logger, req, res)
       else
         welcome(state, req, res)
       res.end()
     } catch (err) {
       res.statusCode = 400
       res.end()
-      console.log(err.name, err.stack)
+      logger.error('Error', { name: err.name, stack: err.stack })
     }
   }
 }
