@@ -36,6 +36,7 @@ module.exports = (state, logger, req, res) => {
     subid: params.query.subid,
     adress: req.socket.address(),
     headers: req.headers,
+    refererDomain: (req.headers['referer'] || '').split('/')[2],
     geoip: Object.assign({}, geo, {
       location: (geo.ll && geo.ll.length > 1) 
       ? {
