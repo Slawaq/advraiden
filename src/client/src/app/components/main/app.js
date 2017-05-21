@@ -35,6 +35,7 @@ class App {
       removeLink: ::this.api.removeLink,
       addLink: ::this.api.addLink,
       changeLink: ::this.api.changeLink,
+      changePrice: ::this.api.changePrice,
       linkGenerator: this.linkGenerator,
       changeTitle: ::this.api.changeCampaigning,
       ...data

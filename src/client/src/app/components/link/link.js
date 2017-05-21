@@ -7,8 +7,11 @@ class Link {
     this.id = props.id
     this.source = props.source
     this.to = ko.observable(props.to)
+    this.price = ko.observable(props.price || 0)
+    this.newPrice = ko.observable(props.price || 0)
     this.removeDelegate = props.remove
     this.changeDelegate = props.change
+    this.changePriceDelegate = props.changePrice
     this.copied = ko.observable(false)
 
     this.editable = ko.observable(false)
@@ -52,6 +55,26 @@ class Link {
 
   toggleEdit () {
     this.editable(!this.editable())
+  }
+
+  async savePrice() {
+    let newPrice = this.newPrice()
+
+    if (newPrice.trim().length === 0 || parseInt(newPrice.trim(), 10) < 0)
+      return
+
+    let accepted = confirm(`Change price from ${this.price()} to ${newPrice}?`)
+
+    if (accepted) {
+      this.saving(true)
+      await this.changePriceDelegate(this.id, newPrice)
+      this.saving(false)
+      this.editable(false)
+      this.price(newPrice)
+    } else {
+      this.editable(false)
+      this.newPrice(this.price())
+    }
   }
 
   async save() {

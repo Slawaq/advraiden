@@ -28,7 +28,8 @@ export default class Campaigning {
       ...linkData, 
       source: this.linkGenerator(this.id)(linkData.id), 
       remove: ::this.removeLink,
-      change: (...args) => this.props.changeLink(this.id, ...args)
+      change: (...args) => this.props.changeLink(this.id, ...args),
+      changePrice: (...args) => this.props.changePrice(this.id, ...args)
     })
   }
 

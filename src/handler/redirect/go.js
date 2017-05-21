@@ -20,7 +20,8 @@ module.exports = (state, logger, req, res) => {
 
   let campaigningId = parseInt(extracted[reversed ? 2 : 1], 10)
   let linkId = parseInt(extracted[reversed ? 1 : 2], 10)
-  let destination = getDestinationUri(state.redirects[campaigningId][linkId])(params.query.subid || '')
+  let link = state.redirects[campaigningId][linkId]
+  let destination = getDestinationUri(link.to)(params.query.subid || '')
 
   res.statusCode = 200
   res.write(htmlRedirect(destination))

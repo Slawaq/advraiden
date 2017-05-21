@@ -36,7 +36,7 @@ let addLink = state => (req, res, next) => {
 
   let campaigning = state.campaignings.find(x => x.id === campaigningId)
   let id = state.generateNextId(campaigning.links) + 37
-  let link = { id, to }
+  let link = { id, to, price: 0 }
 
   campaigning.links.push(link)
   
@@ -53,6 +53,20 @@ let changeLink = state => (req, res, next) => {
   let link = campaigning.links.find(x => x.id === linkId)
   
   link.to = to
+
+  res.write(JSON.stringify(null))
+  next()
+}
+
+let changeLinkPrice = state => (req, res, next) => {
+  let campaigningId = parseInt(req.params.id, 10)
+  let linkId = parseInt(req.params.linkId, 10)
+  let price = parseFloat(req.body.price, 10)
+
+  let campaigning = state.campaignings.find(x => x.id === campaigningId)
+  let link = campaigning.links.find(x => x.id === linkId)
+  
+  link.price = price || 0
 
   res.write(JSON.stringify(null))
   next()
@@ -93,6 +107,7 @@ let setupRouter = state => {
   router.delete('/api/campaigning/:id', removeCampaigning(state), stateUpdater, finisher)
   router.post('/api/campaigning/:id/link', addLink(state), stateUpdater, finisher)
   router.put('/api/campaigning/:id/link/:linkId', changeLink(state), stateUpdater, finisher)
+  router.put('/api/campaigning/:id/link/:linkId/price', changeLinkPrice(state), stateUpdater, finisher)
   router.delete('/api/campaigning/:id/link/:linkId', removeLink(state), stateUpdater, finisher)
 
   return router

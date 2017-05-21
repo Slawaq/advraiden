@@ -47,6 +47,16 @@ export default class Api {
       dataType: 'json'
     }))
   }
+  
+  changePrice(id, linkId, price) {
+    return Promise.resolve(jQuery.ajax({
+      method: 'PUT',
+      url: `/api/campaigning/${id}/link/${linkId}/price`, 
+      data: JSON.stringify({ price }), 
+      contentType:'application/json', 
+      dataType: 'json'
+    }))
+  }
 
   changeCampaigning(id, title) {
     return Promise.resolve(jQuery.ajax({

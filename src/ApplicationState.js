@@ -19,7 +19,7 @@ class ApplicationState {
         let links = campaigning
           .links
           .reduce((rr, link) => {
-            rr[link.id] = link.to
+            rr[link.id] = { to: link.to, price: link.price }
             return rr
           }, {})
         r[campaigning.id] = links
