@@ -31,7 +31,6 @@ module.exports = (state, logger, req, res) => {
 
   geo = Object.assign(geo, { ll_str: geo.ll.join(',') })
 
-  Object
   logger.info('redirect', { 
     campaigningId, 
     campaigningTitle: state.redirects[campaigningId].title, 
