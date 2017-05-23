@@ -27,7 +27,11 @@ module.exports = (state, logger, req, res) => {
   res.write(htmlRedirect(destination))
 
   let parser = new UAParser()
+  let geo = geoip.lookup(getIp(req))
 
+  geo = Object.assign(geo, { ll_str: geo.ll.join(',') })
+
+  Object
   logger.info('redirect', { 
     campaigningId, 
     campaigningTitle: state.redirects[campaigningId].title, 
@@ -36,7 +40,7 @@ module.exports = (state, logger, req, res) => {
     subid: params.query.subid,
     headers: req.headers,
     refererDomain: (req.headers['referer'] || '').split('/')[2],
-    geoip: geoip.lookup(getIp(req)),
+    geoip: geo,
     userAgent: parser.setUA(req.headers['user-agent']).getResult()
   })
 }
