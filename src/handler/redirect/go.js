@@ -27,7 +27,6 @@ module.exports = (state, logger, req, res) => {
   res.write(htmlRedirect(destination))
 
   let parser = new UAParser()
-  let geo = (geoip.lookup(getIp(req)) || {})
 
   logger.info('redirect', { 
     campaigningId, 
@@ -35,16 +34,9 @@ module.exports = (state, logger, req, res) => {
     linkId,
     link: state.redirects[campaigningId][linkId],
     subid: params.query.subid,
-    adress: req.socket.address(),
     headers: req.headers,
     refererDomain: (req.headers['referer'] || '').split('/')[2],
-    geoip: Object.assign({}, geo, {
-      location: (geo.ll && geo.ll.length > 1) 
-      ? {
-          lat: geo.ll[0],
-          lon: geo.ll[1]
-        } 
-      : null}),
+    geoip: geoip.lookup(getIp(req)),
     userAgent: parser.setUA(req.headers['user-agent']).getResult()
   })
 }
