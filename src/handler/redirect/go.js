@@ -1,8 +1,8 @@
 'use strict'
 
-const UAParser = require('ua-parser-js')
+// const UAParser = require('ua-parser-js')
 
-const geoip = require('geoip-lite')
+// const geoip = require('geoip-lite')
 
 const htmlRedirect = require('./redirect')
 const url = require('url')
@@ -26,22 +26,22 @@ module.exports = (state, logger, req, res) => {
   res.statusCode = 200
   res.write(htmlRedirect(destination))
 
-  let parser = new UAParser()
-  let geo = geoip.lookup(getIp(req))
+//  let parser = new UAParser()
+//  let geo = geoip.lookup(getIp(req))
 
-  geo = Object.assign(geo, { ll_str: geo.ll.join(',') })
+//  geo = Object.assign(geo, { ll_str: geo.ll.join(',') })
 
-  logger.info('redirect', { 
-    campaigningId, 
-    campaigningTitle: state.redirects[campaigningId].title, 
-    linkId,
-    link: state.redirects[campaigningId][linkId],
-    subid: params.query.subid,
-    headers: req.headers,
-    refererDomain: (req.headers['referer'] || '').split('/')[2],
-    geoip: geo,
-    userAgent: parser.setUA(req.headers['user-agent']).getResult()
-  })
+//  logger.info('redirect', { 
+//    campaigningId, 
+//    campaigningTitle: state.redirects[campaigningId].title, 
+//    linkId,
+//    link: state.redirects[campaigningId][linkId],
+//    subid: params.query.subid,
+//    headers: req.headers,
+//    refererDomain: (req.headers['referer'] || '').split('/')[2],
+//    geoip: geo,
+//    userAgent: parser.setUA(req.headers['user-agent']).getResult()
+//  })
 }
 
 let getIp = req => req.headers['x-forwarded-for'] || 
